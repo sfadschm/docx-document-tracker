@@ -22,7 +22,8 @@ To generate meaningful and human-readable diffs, the following packages should b
 Please make sure that these commands are included in `PATH` and can be executed from the command line.
 
 ## Installation
-Clone this repository and add the following settings in `.git\config`:
+Download the latest release of clone this repository to your local machine and run `setup.sh`.  
+This script will create the following entries in the projects `.git\config`:
 
     [diff "pandoc"]
       textconv = pandoc --to=markdown 
@@ -31,13 +32,17 @@ Clone this repository and add the following settings in `.git\config`:
     [diff "pdf"]
       textconv = pdf2txt.py
       binary = true
+    [core]
+      hooksPath = hooks
 
 This  configuration will enable the generation of user-readable diffs inside of Github Desktop.
+
+The `hookPath` setting tells git to look for hooks in the tracked `hooks` folder. See [Publishing](#publishing-your-document) for an explanation of the included `post-commit` hook.
 
 You can of course also add this configuration settings to your global `.gitconfig` to make it available for all your projects.
 
 ## Usage
-
+	
 ### Recommended writing methods
 While writing your document in MS Word, stick to some basic rules to avoid problems with document loading times, crashes and other stuff that people keep complaining about. Here are some of those as an entry point:
 
