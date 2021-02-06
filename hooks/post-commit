@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# Get the commit message
+export COM_MSG=`git log -n 1 HEAD --format=format:%s%n%b`
+
+# Exit if commit is not a release
+[[ "$COM_MSG" != "Prepare v"* ]] && exit 0
+
+# Get commit message to extract file names
+IFS=$'\n'
+export FILES=`git log --name-only -n 1`
+
+# Loop all commit message lines
+for FILE in $FILES; do
+  # Skip line if it does not contain .docx file information
+  [[ "$FILE" != *".docx" ]] && continue
+  
+  # Skip if line is not an existing file
+  [[ -f "$FILE" ]] || continue
+
+  # Generate target file name
+  export FILE_NAME=${FILE/.docx/}
+  export VERSION_NUMBER=${COM_MSG/Prepare v/}
+  export VERSION_NUMBER=${VERSION_NUMBER%"."}
+  export TARGET="releases/${FILE_NAME}_v${VERSION_NUMBER}.docx"
+
+  # Copy file to releases folder
+  cp "$FILE" "$TARGET"
+
+  # Check if release file was created
+  if test -f "${TARGET}"; then
+    # Stage release file for commit
+    git add "$TARGET"
+
+    # Commit release to repo
+    git commit -m "Release \"${FILE_NAME} v${VERSION_NUMBER}\""
+  fi
+done
+
+
+  # Get all changed filenames
+  export CHANGED_FILES=`git log --name-only -n1`
+
+  # Loop file named
+  #for CHANGED_FILE in $CHANGED_FILES; do
+  #done
+
+exit 1
