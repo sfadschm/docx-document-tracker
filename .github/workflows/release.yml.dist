@@ -1,0 +1,50 @@
+name: Release Document
+on:
+  push:
+    ignore-paths:
+      - 'releases/**'
+    paths:
+      - '**.docx'
+
+jobs:
+  release-document:
+    name: Create Document Release
+    runs-on: ubuntu-latest
+    if: "startsWith(github.event.head_commit.message, 'Prepare v')"
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check commited files
+        id: changes
+        uses: dorny/paths-filter@v2
+        with:
+          list-files: shell
+          filters: |
+            documents:
+              - added|modified: '*.docx'
+
+      - name: Copy documents to release folder
+        id: copy
+        if: steps.changes.outputs.documents == 'true'
+        run: |
+          for changed_file in ${{ steps.changes.outputs.documents_files }}; do
+            file_name=${changed_file/.docx/}
+            version_number="${{ github.event.head_commit.message }}"
+            version_number=${version_number/Prepare v/}
+            version_number=${version_number%"."}
+            target="releases/${file_name}_v${version_number}.docx"
+            cp "${changed_file}" "$target"
+            if test -f "${target}"; then
+              git add "${target}"
+              git config --local user.email "action@github.com"
+              git config --local user.name "GitHub Action"
+              git commit -m "Release \"${file_name} v${version_number}\"" -a
+            fi
+          done
+
+      - name: Push changes
+        if: steps.changes.outputs.documents == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
