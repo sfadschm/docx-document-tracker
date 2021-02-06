@@ -1,4 +1,4 @@
-# MS Office Document Tracker
+# .docx Document Tracker
 This is a sample `git` project to demonstate how to track progress on a thesis/report or whatever else document written in the Microsoft Office Word `.docx` file format.  
 It is primarily setup to work on Microsoft Windows operating systems and functionality on all other platforms has not been tested.
 
