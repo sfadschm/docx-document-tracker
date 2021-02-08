@@ -10,7 +10,7 @@ thisdir=$(dirname $(readlink -f "$0"))
 command -v "pandoc" >/dev/null 2>&1
 if [[ ! $? -ne 0 ]]; then
   echo "Add local configuration for diffing with pandoc..."
-  git config --local diff.pandoc.textconv "pandoc --f docx --t=markdown"
+  git config --local diff.pandoc.textconv "pandoc --from=docx --to=markdown"
   git config --local diff.pandoc.prompt "false"
   git config --local diff.pandoc.binary "true"
 else
