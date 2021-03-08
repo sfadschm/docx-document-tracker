@@ -79,6 +79,6 @@ Any improvements, suggestions and questions about this project are welcome at an
 Feel free to open an issue for discussion if you think you found a mistake, have suggestions for improvement or extension or whatever else is on your mind.
 
 ## Licence
-This project does not have a licence, do whatever you want to do.
+This project is published unter the `MIT License`.
 
-For more information, refer to the `LICENCE` file or visit [The Unlicense](http://unlicense.org).
+For more information, please refer to the `LICENCE` file.
