@@ -81,4 +81,4 @@ Feel free to open an issue for discussion if you think you found a mistake, have
 ## Licence
 This project is published unter the `MIT License`.
 
-For more information, please refer to the `LICENCE` file.
+For more information, please refer to the `LICENSE` file.
