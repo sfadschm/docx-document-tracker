@@ -21,3 +21,9 @@ Backup of *.doc*
 
 # Autodesk Inventor lock files
 *.lck
+
+# Task list
+*Tasks.txt
+
+# Working documents
+* WD.*
